@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{{ title | default: "Segelflugverein — Willkommen" }}</title>
+  <meta name="description" content="{{ description | default: "Introflüge, Ausbildung & Gemeinschaft" }}">
+  <!-- dein inline SVG Favicon -->
+  <link rel="icon" type="image/svg+xml" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="12" fill="%2305283e"/><path d="M6 34c13-4 26-4 39 1l13 5-13 5C32 55 19 55 6 51" stroke="%23ffffff" stroke-width="3" fill="none" stroke-linecap="round"/></svg>' />
+  <link rel="stylesheet" href="{{ '/assets/home.css' | url }}">
+</head>
+<body>
+  {{ content }}
+  <script defer src="{{ '/assets/home.js' | url }}"></script>
+</body>
+</html>

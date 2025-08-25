@@ -1,4 +1,4 @@
-name: Deploy 11ty to GitHub Pages
+name: Deploy Eleventy to GitHub Pages
 
 on:
   push:
@@ -20,17 +20,46 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: "npm"
-      - run: npm ci
-      - run: npm run build
+          cache: npm
+
+      - name: Install deps
+        run: npm ci
+        # working-directory: website   # <— falls dein Projekt in einem Unterordner liegt, Zeile aktivieren und Pfad anpassen
+
+      - name: Build Eleventy
+        run: npm run build
+        # working-directory: website
+
+      # Diagnose: zeigt Dateien & CSS/JS-Links im erzeugten Output
+      - name: Inspect build output
+        run: |
+          echo "== Files in _site ==" && find _site -maxdepth 2 -type f | sort
+          echo "== Check index.html ==" && (test -f _site/index.html && echo "OK: _site/index.html vorhanden" || (echo "FEHLT: _site/index.html" && exit 1))
+          echo "== Extract asset links from index.html =="
+          (grep -Eo '<link[^>]+href="[^"]+"|<script[^>]+src="[^"]+"' _site/index.html || true)
+        # working-directory: website
+
+      # Optional: Healthcheck-Datei, damit du schnell testen kannst
+      - name: Add health file
+        run: echo "Health OK $(date -u)" > _site/health.txt
+        # working-directory: website
+
+      # Optional: nur relevant, wenn NICHT via Actions deployed würde
+      - name: Add .nojekyll
+        run: touch _site/.nojekyll
+        # working-directory: website
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./_site
+        # with:
+        #   path: website/_site  # <— falls Unterordner
 
   deploy:
     needs: build
