@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>{{ title | default: "Segelflugverein" }}</title>
+  <meta name="description" content="{{ description | default: 'Segelfliegen im Verein – Mitflüge, Ausbildung, Termine.' }}">
+  <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@2/css/pico.min.css">
+  <link rel="stylesheet" href="/assets/site.css">
+  <link rel="alternate" type="application/rss+xml" title="Blog RSS" href="/feed.xml" />
+</head>
+<body>
+  <header class="container">
+    <nav>
+      <ul>
+        <li><strong><a href="/">Segelflugverein</a></strong></li>
+      </ul>
+      <ul>
+        <li><a href="/verein/">Verein</a></li>
+        <li><a href="/flotte/">Flotte</a></li>
+        <li><a href="/ausbildung/">Ausbildung</a></li>
+        <li><a href="/kalender/">Kalender</a></li>
+        <li><a href="/blog/">Blog</a></li>
+        <li><a href="/kontakt/">Kontakt</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="container">
+    {{ content | safe }}
+  </main>
+
+  <footer class="container">
+    <small>© {{ "now" | date: "%Y" }} Segelflugverein • <a href="/impressum/">Impressum</a> • <a href="/datenschutz/">Datenschutz</a></small>
+  </footer>
+</body>
+</html>
